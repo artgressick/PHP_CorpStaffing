@@ -1,0 +1,130 @@
+@charset "UTF-8";
+/* CSS Document */
+/* Main Body Stuff */
+body,html { font-family: 'Lucida Grande', Geneva, Arial, Verdana, sans-serif; font-size: 11px; background: #e5e6e8; color: #000000; margin-top: 15px; padding: 0; }
+
+img { border: 0; }
+form { margin: 0; padding: 0; }
+a:link, a:hover, a:visited { text-decoration: none; }
+
+/* These are for displaying the error and information messages on the screen. */
+div.ErrorMessage { background: #FFBFC5; color: #601319; border-left: 3px solid #601319; padding: 2px 4px; margin: 2px 0; }
+div.ErrorMessage A { color: black; }
+div.InfoMessage { background-color: #B3EFB5; color: #144F16; border-left: 3px solid #144F16; padding: 2px 4px; margin:0 0 4px; }
+div.InfoMessage A { color: black; }
+
+/* Basic formatting for the text, select, textarea and checkbox type fields */
+input, select, button { vertical-align: baseline; border: 1px solid #999; }
+input, select, textarea { font-size: 11px; border: 1px solid #999; }
+input[type=checkbox] { vertical-align: middle; }
+
+
+/* This is the stuff needed for the overlays */
+.warning { text-align: center; border: 1px solid #666; width: 400px; margin: auto; background: #fff; margin-top: 200px; display: block; }
+.warning .red { background: #6F0000; color: #fff; padding: 10px; font-size: 16px; }
+.warning .body { padding: 15px 10px; }
+
+.notice { text-align: center; border: 1px solid #666; width: 400px; margin: auto; background: #fff; margin-top: 200px; display: block; }
+.notice .green { background: #A4EFAC; color: #000; padding: 10px; font-size: 16px; }
+.notice .body { padding: 15px 10px; }
+
+.normal { display: block; }
+.overlaypage { display: none; text-align: center; z-index: 10; }
+/* .overlaypage .gray { position: absolute; top: 0; left: 0; height: 100%; width: 100%; opacity: .5; filter: alpha(opacity=50); background: #333; z-index: 20; } */
+.overlaypage .gray { position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: url(../images/greyoverlay.png) repeat; }
+.overlaypage .message { position: absolute; top: 0; left: 0; height: 100%; width: 100%; z-index: 30; }
+/* Complete */
+
+/* This is for tables typically found in Forms */
+.innerbody { padding:5px; }
+.instructions { background: #6699cc; color: #fff; padding: 2px 4px; }
+.twoCol { width: 100%; }
+.twoCol td { vertical-align: top; }
+.twoCol td.tcleft { width: 50%; text-align:left; }
+.twoCol td.tcright { width: 50%; text-align:left; }
+.twoCol .tcgutter { padding: 0 20px; }
+.colHeader { background:#DDD; font-size:14px; font-weight:bold; padding:3px; margin-top:5px; }
+.directions { border:solid 1px #c0c1c2; border-bottom:none; background:#BFF4FF; padding:5px;padding-left:8px; }
+.directions2 { border:solid 1px #c0c1c2; background:#BFF4FF; padding:5px; }
+
+/* This is the forms section all CSS that affect forms go in this area.*/
+.FormName { font-size: 11px; line-height: 14px; font-weight: bold; margin-left:2px; margin-top:5px; }
+.FormField { margin: 0px; }
+.FormDisplay { margin: 0 0 5px 5px; font-size: 12px; }
+.NoFormDisplay { margin: 0 0 5px 3px; font-size: 10px; color: gray; font-style: italic; }
+.FormRequired { font-size: 10px; line-height: 16px; color: #666; }
+.FormButtons { margin: 10px 3px 3px 0px; }
+.FormTextBox { width:100%; }
+.FormTextArea { width:100%; }
+.FormUploadFile { margin: 2px 0px 0px 0px; } 
+.FormError { background-color: #FFBFC5; }
+.FormErrorCount { background: #FFBFC5; color: #601319; padding: 5px; margin: 2px 0; width: 120px;}
+
+/* Different sized headers */
+.header1 { font-size: 20px; font-weight: bold; }
+.header2 { font-size: 16px; font-weight: bold; padding-bottom:2px; }
+.header3 { font-size: 14px; font-weight: bold; }
+.header4 { font-size: 12px; font-weight: bold; }
+.header5 { font-size: 10px; font-weight: bold; }
+.header6 { font-size: 8px; font-weight: bold; }
+
+/* Navigation Menus on Right side of the screen */
+.navigation { padding:10px;padding-left:5px; }
+.navigation .heading { padding-left:5px;color:#282828;font-weight:bold; }
+.navigation .navbox { border:solid 1px #c0c1c2; padding:0px; }
+.navigation .navbox ul { margin-left:-20px; }
+.navigation .navbox li, .navigation .navbox a { color:blue; }
+
+
+
+/* this is the navigation Drop down CSS: Below Section may no longer be needed */
+/* This section is specifically the main displayed values */
+.navstyle { vertical-align: top; font-size: 11px; }
+/*.navstyle:after { /*Add margin between menu and rest of content in Firefox content: "."; display: block; height: 0; clear: both; visibility: hidden; }*/
+.navstyle ul { padding: 0; margin: 1px 10px 0; }
+.navstyle ul li { display: inline; vertical-align: middle; }
+.navstyle ul li a { color: #000; text-decoration: none; padding: 3px 10px 5px; }
+.navstyle ul li a:hover { background: #5D778E; }
+/* This section is specifically the items that appear in the drop down itself. */
+.dropmenudiv { margin: -1px; position: absolute; top: 0; border: 1px solid #BBB; border-bottom-width: 0; font: normal 10px Verdana; line-height:18px; text-align: left;
+z-index:100; background-color: #5D778E; width: 165px; visibility: hidden;  }
+.dropmenudiv a { white-space: nowrap; display: block; text-indent: 3px; border-bottom: 1px solid #fff; padding: 2px 5px 2px 0px; text-decoration: none; color: white; z-index: 110; }
+.dropmenudiv ul { margin: 0; padding: 0; z-index: 120; }
+.dropmenudiv li { list-style-type: none; margin: 0; padding: 0; z-index: 130; }
+* html .dropmenudiv a { /*IE only hack*/ width: 100%; }
+.dropmenudiv a:hover { background-color: #3D5569; }
+.NormalTable { background-color: #FFF; padding: 0px; font-size: 11px; width: 100%; border: 1px solid #999;}
+
+/* These are for displaying the error and information messages on the screen. */
+div.ErrorMessage { background: #FFBFC5; color: #601319; border-left: 3px solid #601319; padding: 2px 4px; margin: 2px 0; }
+div.ErrorMessage A { color: black; }
+div.infoMessage { background-color: #B3EFB5; color: #144F16; border-left: 3px solid #144F16; padding: 2px 4px; margin:0 0 4px; }
+div.infoMessage A { color: black; }
+.errorMessages { background: #FFBFC5; color: #601319; border-left: 3px solid #601319; padding: 2px 4px; margin: 2px 0; }
+.errorMessages A { color: black; }
+.infoMessages { background-color: #B3EFB5; color: #144F16; border-left: 3px solid #144F16; padding: 2px 4px; margin:0 0 4px; }
+.infoMessages A { color: black; }
+
+/* List Page CSS */
+.filter { margin: 0px; padding: 0px; width: 100%; border:1px solid #999; border-bottom:none; }
+.filter td { vertical-align: middle; background: #6699cc; color: #FFF; padding: 2px 4px; white-space: nowrap; }
+.filter .filterRight { text-align: right; width: 100%; }
+
+.filter2 { margin: 0; padding: 0px; width: 100%; }
+.filter2 td { vertical-align: middle; background: #ffccaa; color: #000; padding: 2px 4px; white-space: nowrap; }
+.filter2 .filter2Right { text-align: right; width: 100%; }
+.resultsShown { font-size: 12px; color: #666; }
+
+/* This section is for the myschedule pages */
+.LocationHeader { background-color:#CCC; padding:5px; font-size:14px; font-weight:bold; }
+.ShiftRow { padding:5px; font-size:12px; white-space: nowrap; }
+
+.ConfirmationHeader { background-color:#CCC; padding:5px; font-size:14px; font-weight:bold; }
+
+/* Tabs Section */
+.Tabs { width: auto; font-size: 10px; padding:0px; margin:0px; }
+.Tabs td A, table.Tabs td a, table.Tabs div.NoLink {
+	display: block; white-space: nowrap; line-height: 23px; border:1px solid #000; border-bottom:none; color:black; margin-right:1px; }
+.Tabs td.Current a, table.Tabs td.Current a:visited, table.Tabs td.Current div.NoLink { color: white; background-color: #777; }
+.Tabs td select { color: black; font-size: 10px; }
+

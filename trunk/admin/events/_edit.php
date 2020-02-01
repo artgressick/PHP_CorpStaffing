@@ -1,0 +1,44 @@
+<?
+	include_once($BF.'components/add_functions.php');
+	include_once($BF.'components/edit_functions.php');
+	// Set the basic values to be used.
+	//   $table = the table that you will be connecting to to check / make the changes
+	//   $mysqlStr = this is the "mysql string" that you are going to be using to update with.  This needs to be set to "" (empty string)
+	//   $sudit = this is the "audit string" that you are going to be using to update with.  This needs to be set to "" (empty string)
+	$table = 'Events';
+	$mysqlStr = '';
+	$audit = '';
+
+	// "List" is a way for php to split up an array that is coming back.  
+	// "set_strs" is a function (bottom of the _lib) that is set up to look at the old information in the DB, and compare it with
+	//    the new information in the form fields.  If the information is DIFFERENT, only then add it to the mysql string to update.
+	//    This will ensure that only information that NEEDS to be updated, is updated.  This means smaller and faster DB calls.
+	//    ...  This also will ONLY add changes to the audit table if the values are different.
+	list($mysqlStr,$audit) = set_strs($mysqlStr,'chrEvent',$info['chrEvent'],$audit,$table,$info['ID']);
+	list($mysqlStr,$audit) = set_strs_date($mysqlStr,'dBegin',$info['dBegin'],$audit,$table,$info['ID']);
+	list($mysqlStr,$audit) = set_strs_date($mysqlStr,'dEnd',$info['dEnd'],$audit,$table,$info['ID']);
+	list($mysqlStr,$audit) = set_strs($mysqlStr,'chrTextMessage',$info['chrTextMessage'],$audit,$table,$info['ID']);
+	list($mysqlStr,$audit) = set_strs($mysqlStr,'idTimeZone',$info['idTimeZone'],$audit,$table,$info['ID']);
+	list($mysqlStr,$audit) = set_strs_checkbox($mysqlStr,'bTextMessage',$info['bTextMessage'],$audit,$table,$info['ID']);
+	
+	// if nothing has changed, don't do anything.  Otherwise update / audit.
+	if($mysqlStr != '') { 
+		$_SESSION['infoMessages'][] = $_POST['chrEvent']. " has been successfully updated in the Database.";
+		list($str,$aud) = update_record($mysqlStr, $audit, $table, $info['ID']);
+	 } else {
+	 	$_SESSION['infoMessages'][] = "No Changes have been made to ".$_POST['chrEvent'];
+	 }
+
+	db_query("DELETE FROM ShowManagers WHERE idEvent=". $info['ID'],"erasing users");	 
+	if(isset($_POST['idUsers']) && $_POST['idUsers'] != '') {
+		$users = explode(',',$_POST['idUsers']);
+		$q2 = "";
+		foreach($users as $v) {
+			$q2 .= "('".makekey()."','".$info['ID']."','".$v."'),";
+		}
+		db_query("INSERT INTO ShowManagers (chrKEY,idEvent,idPerson) VALUES ". substr($q2,0,-1),"inserting show managers");
+	}
+		
+	header("Location: index.php");
+	die();	
+?>

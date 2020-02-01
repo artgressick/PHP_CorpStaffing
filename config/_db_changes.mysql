@@ -1,0 +1,142 @@
+/* Sept 14, 2007 */
+
+CREATE TABLE Zones (
+  ID SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  chrKEY VARCHAR(40) NOT NULL,
+  bDeleted TINYINT(1) NOT NULL DEFAULT 0,
+  idLocation SMALLINT UNSIGNED NOT NULL,
+  idEvent SMALLINT UNSIGNED NOT NULL,
+  chrZone VARCHAR(100) NOT NULL,
+  index(bDeleted),
+  index(chrKEY(10))
+) ENGINE=MyISAM, CHARACTER SET utf8;
+
+
+CREATE TABLE ShowManagers (
+  ID SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  chrKEY VARCHAR(40) NOT NULL,
+  bDeleted TINYINT(1) NOT NULL DEFAULT 0,
+  idPerson SMALLINT UNSIGNED NOT NULL,
+  idEvent SMALLINT UNSIGNED NOT NULL,
+  index(chrKEY(10)),
+  index(idPerson),
+  index(idEvent),
+  index(bDeleted)
+) ENGINE=MyISAM CHARACTER SET utf8;
+
+CREATE TABLE ZoneManagers (
+  ID SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  chrKEY VARCHAR(40) NOT NULL,
+  bDeleted TINYINT(1) NOT NULL DEFAULT 0,
+  idPerson SMALLINT UNSIGNED NOT NULL,
+  idZone SMALLINT UNSIGNED NOT NULL,
+  idEvent SMALLINT UNSIGNED NOT NULL,
+  index(chrKEY(10)),
+  index(idPerson),
+  index(idEvent),
+  index(idZone),	
+  index(bDeleted)
+) ENGINE=MyISAM CHARACTER SET utf8;
+
+CREATE TABLE EventStaffingStatus (
+  ID TINYINT(2) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  chrStatus VARCHAR(50) NOT NULL
+) ENGINE=MyISAM CHARACTER SET utf8;
+INSERT INTO EventStaffingStatus (chrStatus) VALUES ('Closed'),('Open'),('Read Only');
+
+CREATE TABLE EventZoneManagerStatus (
+  ID TINYINT(2) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  chrStatus VARCHAR(50) NOT NULL
+) ENGINE=MyISAM CHARACTER SET utf8;
+INSERT INTO EventZoneManagerStatus (chrStatus) VALUES ('Read Only'),('Able to Schedule');
+
+ALTER TABLE Events ADD idStaffingStatus TINYINT(2) NOT NULL DEFAULT 1;
+ALTER TABLE Events ADD idZoneManagerStatus TINYINT(2) NOT NULL DEFAULT 1;
+
+/* October 10th 2007 */
+CREATE TABLE Schedule (
+  ID SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  idEvent SMALLINT UNSIGNED NOT NULL,
+  idPerson SMALLINT UNSIGNED NOT NULL,
+  idLocation SMALLINT UNSIGNED NOT NULL,
+  idShift SMALLINT UNSIGNED NOT NULL,
+  idStation SMALLINT UNSIGNED NOT NULL,
+  idAssigner SMALLINT UNSIGNED NOT NULL,
+  dtStamp DATETIME NOT NULL,
+  index(idEvent),
+  index(idPerson),
+  index(idLocation),
+  index(idShift),
+  index(idStation)
+) ENGINE=MyISAM CHARACTER SET utf8;
+
+/* October 10th 2007 */
+ALTER TABLE Events ADD bTextMessage TINYINT(1) NOT NULL DEFAULT 0 AFTER bDeleted;
+ALTER TABLE Events ADD chrTextMessage VARCHAR(255);
+
+/* October 17th 2007 */
+CREATE TABLE CalendarQueries (
+  ID SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  bDeleted TINYINT(1) NOT NULL DEFAULT 0,
+  chrKEY VARCHAR(40) NOT NULL,
+  idPerson SMALLINT UNSIGNED NOT NULL,
+  dtCreated DATETIME NOT NULL,
+  dtSynced DATETIME NOT NULL,
+  chrCalendarQuery TEXT,
+  index(chrKEY),
+  index(bDeleted),
+  index(idPerson)
+ ) ENGINE=MyISAM, CHARACTER SET utf8;
+ 
+ /* October 18th 2007 */
+CREATE TABLE EmailerTypes (
+  ID SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  bDeleted TINYINT(1) NOT NULL DEFAULT 0,
+  chrKEY VARCHAR(40) NOT NULL,
+  chrEmailer VARCHAR(50) NOT NULL,
+  chrSendTo VARCHAR(255) NOT NULL
+ ) ENGINE=MyISAM, CHARACTER SET utf8;
+ 
+ CREATE TABLE EmailerLogs (
+  ID SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  bAttachSchedule TINYINT(1) NOT NULL DEFAULT 0,
+  chrKEY VARCHAR(40) NOT NULL,
+  idEmailerType SMALLINT UNSIGNED NOT NULL,
+  idPerson SMALLINT UNSIGNED NOT NULL,
+  intRecipients SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  intAttachmentSize INT(11),
+  dtSent DATETIME,
+  chrSubject VARCHAR(255),
+  chrAttachmentType VARCHAR(50),
+  chrAttachmentName VARCHAR(150),
+  txtMessage TEXT,
+  index(chrKEY),
+  index(idEmailerType),
+  index(idPerson)
+ ) ENGINE=MyISAM, CHARACTER SET utf8;
+ 
+ /* October 22 2007 */
+ CREATE TABLE LandingPage (
+  ID TINYINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  idEvent SMALLINT UNSIGNED NOT NULL,
+  txtHTML TEXT
+) TYPE=MyISAM, CHARACTER SET utf8;
+INSERT INTO LandingPage SET idEvent='1', txtHTML='<B>This is a Landing Page Example, this can be edited in the Admin Section.</B>';
+
+CREATE TABLE ZoneStations (
+  idZone SMALLINT UNSIGNED NOT NULL,
+  idStation SMALLINT UNSIGNED NOT NULL,
+  index(idZone),
+  index(idStation)
+) TYPE=MyISAM, CHARACTER SET utf8;  
+ 
+ 
+ CREATE TABLE `TimeZone` (
+   ID SMALLINT(3) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  chrTimeZone VARCHAR(255) NOT NULL,
+  intOffset SMALLINT(3) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `TimeZone` VALUES (5,'Alaska Standard Time(GMT-9)',-9),(6,'Alaska Daylight Time(GMT-8)',-8),(7,'Aleutian-Hawaii (GMT-10)',-10),(8,'Atlantic Standard Time (GMT-4)',-4),(9,'Atlantic Daylight Time (GMT-3)',-3),(10,'Azores (GMT-1)',-1),(11,'Baku (GMT +4)',4),(12,'Bangkok (GMT +7)',7),(13,'Brazilia (GMT-3)',-3),(14,'Central Standard Time (GMT-6)',-6),(15,'Central Daylight Time (GMT-5)',-5),(16,'Dhakar (GMT +6)',6),(17,'Eastern Standard Time (GMT-5)',-5),(18,'Eastern Daylight Time (GMT-4)',-4),(19,'Eniwetok (GMT-12)',-12),(20,'Fiji (GMT +12)',12),(21,'Greenwich Mean Time (GMT)',0),(22,'Hawaii-Aleutian (GMT-10)',-10),(23,'Hong Kong (GMT +8)',8),(24,'Israel (GMT +2)',2),(25,'London (GMT)',0),(26,'Magadan (GMT +11)',11),(27,'Mid-Atlantic (GMT-2)',-2),(28,'Moscow (GMT +3)',3),(29,'Mountain Standard Time (GMT-7)',-7),(30,'Mountain Daylight Time (GMT-6)',-6),(31,'New Delhi (GMT +5)',5),(32,'New York (GMT -5 EST)',-5),(33,'Pacific Standard Time (GMT-8)',-8),(34,'Pacific Daylight Time (GMT-7)',-7),(35,'Rome (GMT +1)',1),(36,'Samoa (GMT-11)',-11),(37,'San Francisco (GMT -8 PST)',-8),(38,'Sydney (GMT +10)',10),(39,'Tokyo (GMT +9)',9),(40,'Wellington (GMT +12)',12);
+
+ALTER TABLE Events ADD idTimeZone SMALLINT(3);

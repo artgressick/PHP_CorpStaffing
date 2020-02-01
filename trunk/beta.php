@@ -1,0 +1,1 @@
+<?	include($BF .'models/template.php');?>
